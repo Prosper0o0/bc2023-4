@@ -36,6 +36,7 @@ app.get('/', (req, res) => {
                 }
             }
         }
+        console.log(maxRate);
         const resultXml = xmlbuilder.create('data')
             .ele('max_rate', maxRate.toString())
             .end({ pretty: true });

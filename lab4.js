@@ -19,8 +19,14 @@ fs.readFile("data.xml", "utf8", (err, data) => {
     const parser = new XMLParser(options);
     const obj = parser.parse(data);
     let maxRate = -Infinity;
+    let currencies;
 
-    for (const currency of obj.exchange.currency) {
+    if (Array.isArray(obj.exchange.currency)) {
+        currencies = obj.exchange.currency;
+    } else {
+        currencies = [obj.exchange.currency];
+    }
+    for (const currency of currencies) {
         if (currency.rate) {
             const rate = parseFloat(currency.rate);
             if (!isNaN(rate) && rate > maxRate) {
@@ -28,7 +34,6 @@ fs.readFile("data.xml", "utf8", (err, data) => {
             }
         }
     }
-    console.log(maxRate);
     const resultXml = xmlbuilder.create('data')
         .ele('max_rate', maxRate.toString())
         .end({ pretty: true });

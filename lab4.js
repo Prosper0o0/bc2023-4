@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
         for (const currency of currencies) {
             if (currency.rate) {
                 const rate = parseFloat(currency.rate);
-                if (!isNaN(rate) && rate > maxRate) {
+                if (rate > maxRate) {
                     maxRate = rate;
                 }
             }
